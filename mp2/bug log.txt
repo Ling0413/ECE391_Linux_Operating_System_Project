@@ -1,0 +1,32 @@
+Version 1:
+	Description: finishing writing vertical line and add the status bar to the game.
+	Problem: The location of the bar on the screen is not on the bottom of the screen.
+	Solution: Change the register value of the mode_X_CRTC since the 0x12 register determine the number of line in the VGA, i just change it to 400 lines.
+
+Version 2:
+	Description: finishing putting the level,fruit_number,time to the game.
+	Problem: The content of the level, fruit and the time can't shown in the status bar. And when i move the people, the status bar will copy the image of the people.
+	Solution: The reason is that i wrongly locate the location in the vedio memory. It's not a big bug i just wrongly write i as j in the for loop.
+
+Version 3:
+	Description: finishing the masking.
+	Problem: Failed. When moving the character, it still has the black in the screen.
+	Solution: I wrongly using the loop. We should first use the show_bar to calculate the character and restore. Then do the show_screen, then draw_full_block.
+
+Version 4:
+	Description: finishing the color of wall,character, and show the string.
+	Problem: The string can't show correct transparent color and when moving to the up it will be black and have screw.
+	Solution: First change the 64 index palette into 128 index palette with last 64 index for transparent color.
+	              Just set a limit for the string to move when touch the top. If out of the limit just stick the y_value of the string.
+
+Version 5:
+	Description: finishing the driver set for the ioctl including the init, led, button and write input.
+	Problem: it seems that the definition of the init,led,button is right but the input just can't show what i want.
+	Solution: Since we use a lock to control the flag of the function, it seems that the init function may need some time to finish but
+	               the second function can't wait so it will just be skip. I just add a sleep(5) between function to make the led show.
+
+Version 6:
+	Description: finishing the tux_thread in the mazegame.c and update the time into the tux.
+	Problem: it seems that the tux can't control the main loop.
+	Solution: I can't find out what is going wrong. It seems that my logic is right. I just re-write the thread and turn off the computer, make clean
+		all the things. The problem is solved. I guess it might be some mis-write due to the carelessness.
